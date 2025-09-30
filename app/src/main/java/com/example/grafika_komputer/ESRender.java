@@ -6,16 +6,21 @@ import android.opengl.GLU;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+
 // class ESRender bertugas sebagai Renderer untuk GLSurfaceView
 // renderer ini yang akan mengatur bagaimana objek ditampilkan di layar
 public class ESRender implements GLSurfaceView.Renderer {
 
     // objek untuk menggambar titik/vertex yang dibuat dari class CreatePoints
     private CreatePoints points_object;
+    private CreateLines bresenham_line_object;
+    private CreateLines dda_line_object;
 
     public ESRender() {
-        // membuat objek CreatePoints ketika renderer diinisialisasi
+        // membuat objek ketika renderer diinisialisasi
         this.points_object = new CreatePoints();
+        this.bresenham_line_object =  new CreateLines(0.0f, 0.0f, 10.0f, 5.0f, CreateLines.Algorithm.BRESENHAM);
+        this.dda_line_object =  new CreateLines(0.5f, 0.5f, 10.0f, 5.0f, CreateLines.Algorithm.DDA);
     }
 
     @Override
@@ -54,13 +59,19 @@ public class ESRender implements GLSurfaceView.Renderer {
         gl.glTranslatef(0.0f, 0.0f, -5.0f);
 
         // atur ukuran titik yang akan digambar
-        gl.glPointSize(40f);
+        gl.glPointSize(20f);
 
         // aktifkan smoothing supaya titik terlihat lebih halus (bulat)
         gl.glEnable(GL10.GL_POINT_SMOOTH);
 
-        // panggil method untuk menggambar titik dari CreatePoints
-        points_object.draw_points(gl);
+        // gambar titik
+        //points_object.draw_points(gl);
+
+        //gambar garis menggunakan bresenham
+        bresenham_line_object.onDraw(gl);
+
+        //gambar garis menggunakan dda
+        dda_line_object.onDraw(gl);
 
         // kembalikan transformasi ke kondisi semula
         gl.glPopMatrix();
