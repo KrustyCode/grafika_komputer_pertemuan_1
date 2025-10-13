@@ -15,12 +15,14 @@ public class ESRender implements GLSurfaceView.Renderer {
     private CreatePoints points_object;
     private CreateLines bresenham_line_object;
     private CreateLines dda_line_object;
+    private Create2DShapes shape_2d;
 
     public ESRender() {
         // membuat objek ketika renderer diinisialisasi
         this.points_object = new CreatePoints();
         this.bresenham_line_object =  new CreateLines(0.0f, 0.0f, 10.0f, 5.0f, CreateLines.Algorithm.BRESENHAM);
         this.dda_line_object =  new CreateLines(0.5f, 0.5f, 10.0f, 5.0f, CreateLines.Algorithm.DDA);
+        this.triangle = new Create2DShapes();
     }
 
     @Override
@@ -68,10 +70,14 @@ public class ESRender implements GLSurfaceView.Renderer {
         //points_object.draw_points(gl);
 
         //gambar garis menggunakan bresenham
-        bresenham_line_object.onDraw(gl);
+        //bresenham_line_object.onDraw(gl);
 
         //gambar garis menggunakan dda
-        dda_line_object.onDraw(gl);
+        //da_line_object.onDraw(gl);
+
+        // gambar segitiga dan persegi
+        shape_2d.Triangle(gl);
+        shape_2d.Square(gl);
 
         // kembalikan transformasi ke kondisi semula
         gl.glPopMatrix();

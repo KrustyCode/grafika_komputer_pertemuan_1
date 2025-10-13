@@ -41,6 +41,8 @@ public class CreateLines {
         // mendapatkan jumlah titik yang ada
         pointCount = vertices.size() / 3;
 
+        System.out.println("jumlah titik: " + pointCount);
+
         // Convert ArrayList menjadi float array
         float[] vertexArray = new float[vertices.size()];
         for (int i = 0; i < vertices.size(); i++) {

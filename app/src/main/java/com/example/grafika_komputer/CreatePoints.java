@@ -100,4 +100,5 @@ public class CreatePoints {
         // ---> Reset state setelah menggambar
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     }
+
 }
