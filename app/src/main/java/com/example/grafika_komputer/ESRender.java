@@ -22,7 +22,7 @@ public class ESRender implements GLSurfaceView.Renderer {
         this.points_object = new CreatePoints();
         this.bresenham_line_object =  new CreateLines(0.0f, 0.0f, 10.0f, 5.0f, CreateLines.Algorithm.BRESENHAM);
         this.dda_line_object =  new CreateLines(0.5f, 0.5f, 10.0f, 5.0f, CreateLines.Algorithm.DDA);
-        this.triangle = new Create2DShapes();
+        this.shape_2d = new Create2DShapes();
     }
 
     @Override
