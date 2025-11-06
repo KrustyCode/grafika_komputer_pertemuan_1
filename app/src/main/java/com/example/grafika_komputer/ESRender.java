@@ -66,20 +66,64 @@ public class ESRender implements GLSurfaceView.Renderer {
         // aktifkan smoothing supaya titik terlihat lebih halus (bulat)
         gl.glEnable(GL10.GL_POINT_SMOOTH);
 
-        // gambar titik
-        //points_object.draw_points(gl);
-
-        //gambar garis menggunakan bresenham
-        //bresenham_line_object.onDraw(gl);
-
-        //gambar garis menggunakan dda
-        //da_line_object.onDraw(gl);
-
-        // gambar segitiga dan persegi
+        // Gambar segitiga untuk batang pohon
+        gl.glPushMatrix();
+        gl.glTranslatef(0.0f, -0.7f,0.0f);
+        gl.glScalef(0.3f, 1.0f, 1.0f);
         shape_2d.Triangle(gl);
-        shape_2d.Square(gl);
+        gl.glPopMatrix();
 
-        // kembalikan transformasi ke kondisi semula
+        // Gambar lingkaran untuk daun pohon
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.4f, -0.15f, 0.0f);
+        shape_2d.Circle(gl, 0.25f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(-0.3f, 0.3f, 0.0f);
+        shape_2d.Circle(gl, 0.3f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(0.0f, 0.4f, 0.0f);
+        shape_2d.Circle(gl, 0.2f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(0.3f, 0.25f, 0.0f);
+        shape_2d.Circle(gl, 0.25f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(0.55f, 0.0f, 0.0f);
+        shape_2d.Circle(gl, 0.2f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(0.1f, -0.1f, 0.0f);
+        shape_2d.Circle(gl, 0.4f);
+        gl.glPopMatrix();
+
+        gl.glPushMatrix();
+        gl.glTranslatef(0.2f, 0.5f, 0.0f);
+        gl.glRotatef(10.0f, 0.0f, 0.0f, 1.0f);
+        float shx = 0.5f; // shear in X
+        float shy = 0.0f; // shear in Y
+
+        float[] shearMatrix = {
+                1,  shy, 0, 0,
+                shx, 1,  0, 0,
+                0,   0,  1, 0,
+                0,   0,  0, 1
+        };
+
+
+        gl.glMultMatrixf(shearMatrix, 0);
+
+        shape_2d.Circle(gl, 0.2f);
+        gl.glPopMatrix();
+
+
         gl.glPopMatrix();
     }
 }

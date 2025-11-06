@@ -31,21 +31,17 @@ public class Create2DShapes {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 
         // Warna biru
-        gl.glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
+        gl.glColor4f(0.76f, 0.60f, 0.42f, 1.0f);
 
         // Titik-titik segitiga (masing-masing 3 nilai: x, y, z)
         float[] vertices = {
-                -1.0f, -0.1f, -5.0f,
-                -0.5f, -0.25f, -5.0f,
-                -0.75f, 0.25f, -5.0f,
-
-                0.5f, -0.25f, -5.0f,
-                1.0f, -0.25f, -5.0f,
-                0.75f, 0.25f, -5.0f,
+                0.0f,  0.75f,  0.0f,  // top vertex
+                -0.5f, -0.75f,  0.0f,  // bottom left
+                0.5f, -0.75f,  0.0f   // bottom right
         };
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(vertices));
-        gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 6);
+        gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     }
@@ -143,6 +139,35 @@ public class Create2DShapes {
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, makeFloatBuffer(vertices));
         gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 4);
+
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+    }
+
+    public void Circle(GL10 gl, float radius){
+        final int numSegments = 32;
+        gl.glColor4f(0.4f, 1.0f, 0.4f, 1.0f);
+        float[] vertices = new float[(numSegments + 2) * 3]; // center + segments
+        vertices[0] = 0.0f;  // center X
+        vertices[1] = 0.0f;  // center Y
+        vertices[2] = 0.0f;  // center Z
+
+        for (int i = 0; i <= numSegments; i++) {
+            float angle = (float)(2.0f * Math.PI * i / numSegments);
+            vertices[(i + 1) * 3] = (float)Math.cos(angle) * radius;
+            vertices[(i + 1) * 3 + 1] = (float)Math.sin(angle) * radius;
+            vertices[(i + 1) * 3 + 2] = 0.0f;
+        }
+
+        ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
+        vbb.order(ByteOrder.nativeOrder());
+        FloatBuffer vertexBuffer = vbb.asFloatBuffer();
+        vertexBuffer.put(vertices);
+        vertexBuffer.position(0);
+
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+
+        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, numSegments + 2);
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
     }
